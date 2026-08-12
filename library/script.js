@@ -1,4 +1,10 @@
-const myLibrary = [];
+const bookTitle = document.querySelector('[name="title"]');
+const bookAuthor = document.querySelector('[name="author"]');
+const hasRead = document.querySelector('select');
+const addBtn = document.querySelector('[type="button"]');
+const form = document.querySelector('.table-items');
+
+let myLibrary = JSON.parse(localStorage.getItem('books')) || []
 
 class Book {
   constructor(title, author, pages, hasRead) {
@@ -9,28 +15,8 @@ class Book {
   }
 }
 
-function addBookToLibrary() {
-
+function removeItem(id) {
+  const itemToDelete = document.getElementById(`${id}`);
+  myLibrary.splice(itemToDelete.id, 1);
+  handleStorageAndDisplay();
 }
-
-function displayBooks() {
-
-}
-
-const newBookBtn = document.getElementById('new-book-btn');
-const newBookDialog = document.getElementById('new-book-dialog');
-const newBookForm = document.getElementById('new-book-form');
-const cancelBtn = document.getElementById('cancel-btn');
-const bookContainer = document.getElementById('book-container');
-
-newBookBtn.addEventListener('click', () => {
-  newBookDialog.showModal();
-});
-
-cancelBtn.addEventListener('click', () => {
-  newBookDialog.close();
-});
-
-newBookForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-});
