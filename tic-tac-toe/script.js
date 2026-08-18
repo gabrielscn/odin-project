@@ -1,22 +1,48 @@
-const gameBoard = (() => {
+const Gameboard = (() => {
+  let gameboard = ["", "", "", "", "", "", "", "", "",];
 
-  const playerFactory = (name, mark, ai, turn) => {
-    return { name, mark, ai, turn };
-  };
+  const render = () => {
+    let boardHTML = "";
+    gameboard.forEach((square, index) => {
+      boardHTML += `<div class="square" id="square-${index}">${square}</div>`
+    })
+    document.querySelector("#gameboard").innerHTML = boardHTML;
+  }
 
-  const player1 = playerFactory('player 1', 'X', false, true);
-  const player2 = playerFactory('player 2', 'O', false, false);
+  return {
+    render,
+  }
+})();
 
-  const winCombos = [
-    [0, 1, 2],
-    [0, 3, 6],
-    [3, 4, 5],
-    [6, 7, 8],
-    [1, 4, 7],
-    [2, 4, 6],
-    [2, 5, 8],
-    [0, 4, 8]
-  ];
+const createPlayer = (name, mark) => {
+  return {
+    name,
+    mark
+  }
+}
 
+const Game = (() => {
+  let players = [];
+  let currentPlayerIndex
+  let gameOver
 
-})
+  const start = () => {
+    players = [
+      createPlayer(document.querySelector("#player1").value, "X"),
+      createPlayer(document.querySelector("#player2").value, "O")
+    ]
+
+    currentPlayerIndex = 0;
+    gameOver = false;
+    Gameboard.render();
+  }
+
+  return {
+    start,
+  }
+})();
+
+const startButton = document.querySelector("#start-button");
+startButton.addEventListener("click", () => {
+  Game.start();
+});
